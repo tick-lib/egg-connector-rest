@@ -25,8 +25,12 @@
 ## Install
 
 ```bash
-$ npm i egg-connector-rest --save
+npm i egg-connector-rest --save
 ```
+
+## feature
+
+1. git-flow
 
 ## Usage
 
