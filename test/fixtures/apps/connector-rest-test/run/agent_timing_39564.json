@@ -1,0 +1,330 @@
+[
+  {
+    "name": "Application Start",
+    "start": 1576749240775,
+    "end": 1576749240929,
+    "duration": 154,
+    "pid": 39564,
+    "index": 0
+  },
+  {
+    "name": "Load Plugin",
+    "start": 1576749240778,
+    "end": 1576749240786,
+    "duration": 8,
+    "pid": 39564,
+    "index": 1
+  },
+  {
+    "name": "Load Config",
+    "start": 1576749240786,
+    "end": 1576749240797,
+    "duration": 11,
+    "pid": 39564,
+    "index": 2
+  },
+  {
+    "name": "Require(0) config/config.default.js",
+    "start": 1576749240786,
+    "end": 1576749240788,
+    "duration": 2,
+    "pid": 39564,
+    "index": 3
+  },
+  {
+    "name": "Require(1) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-session/config/config.default.js",
+    "start": 1576749240789,
+    "end": 1576749240790,
+    "duration": 1,
+    "pid": 39564,
+    "index": 4
+  },
+  {
+    "name": "Require(2) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-security/config/config.default.js",
+    "start": 1576749240790,
+    "end": 1576749240790,
+    "duration": 0,
+    "pid": 39564,
+    "index": 5
+  },
+  {
+    "name": "Require(3) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-jsonp/config/config.default.js",
+    "start": 1576749240791,
+    "end": 1576749240791,
+    "duration": 0,
+    "pid": 39564,
+    "index": 6
+  },
+  {
+    "name": "Require(4) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-onerror/config/config.default.js",
+    "start": 1576749240791,
+    "end": 1576749240791,
+    "duration": 0,
+    "pid": 39564,
+    "index": 7
+  },
+  {
+    "name": "Require(5) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-i18n/config/config.default.js",
+    "start": 1576749240792,
+    "end": 1576749240792,
+    "duration": 0,
+    "pid": 39564,
+    "index": 8
+  },
+  {
+    "name": "Require(6) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-watcher/config/config.default.js",
+    "start": 1576749240793,
+    "end": 1576749240793,
+    "duration": 0,
+    "pid": 39564,
+    "index": 9
+  },
+  {
+    "name": "Require(7) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-schedule/config/config.default.js",
+    "start": 1576749240793,
+    "end": 1576749240793,
+    "duration": 0,
+    "pid": 39564,
+    "index": 10
+  },
+  {
+    "name": "Require(8) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-multipart/config/config.default.js",
+    "start": 1576749240793,
+    "end": 1576749240793,
+    "duration": 0,
+    "pid": 39564,
+    "index": 11
+  },
+  {
+    "name": "Require(9) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-logrotator/config/config.default.js",
+    "start": 1576749240794,
+    "end": 1576749240794,
+    "duration": 0,
+    "pid": 39564,
+    "index": 12
+  },
+  {
+    "name": "Require(10) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-static/config/config.default.js",
+    "start": 1576749240794,
+    "end": 1576749240794,
+    "duration": 0,
+    "pid": 39564,
+    "index": 13
+  },
+  {
+    "name": "Require(11) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-view/config/config.default.js",
+    "start": 1576749240794,
+    "end": 1576749240795,
+    "duration": 1,
+    "pid": 39564,
+    "index": 14
+  },
+  {
+    "name": "Require(12) /Users/theone/Programme/my-libs/egg-connector-rest/config/config.default.js",
+    "start": 1576749240795,
+    "end": 1576749240795,
+    "duration": 0,
+    "pid": 39564,
+    "index": 15
+  },
+  {
+    "name": "Require(13) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg/config/config.default.js",
+    "start": 1576749240795,
+    "end": 1576749240795,
+    "duration": 0,
+    "pid": 39564,
+    "index": 16
+  },
+  {
+    "name": "Require(14) config/config.default.js",
+    "start": 1576749240796,
+    "end": 1576749240796,
+    "duration": 0,
+    "pid": 39564,
+    "index": 17
+  },
+  {
+    "name": "Require(15) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-watcher/config/config.unittest.js",
+    "start": 1576749240796,
+    "end": 1576749240797,
+    "duration": 1,
+    "pid": 39564,
+    "index": 18
+  },
+  {
+    "name": "Require(16) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg/config/config.unittest.js",
+    "start": 1576749240797,
+    "end": 1576749240797,
+    "duration": 0,
+    "pid": 39564,
+    "index": 19
+  },
+  {
+    "name": "Load extend/agent.js",
+    "start": 1576749240798,
+    "end": 1576749240828,
+    "duration": 30,
+    "pid": 39564,
+    "index": 20
+  },
+  {
+    "name": "Require(17) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-security/app/extend/agent.js",
+    "start": 1576749240798,
+    "end": 1576749240799,
+    "duration": 1,
+    "pid": 39564,
+    "index": 21
+  },
+  {
+    "name": "Require(18) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-schedule/app/extend/agent.js",
+    "start": 1576749240800,
+    "end": 1576749240823,
+    "duration": 23,
+    "pid": 39564,
+    "index": 22
+  },
+  {
+    "name": "Require(19) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-logrotator/app/extend/agent.js",
+    "start": 1576749240823,
+    "end": 1576749240825,
+    "duration": 2,
+    "pid": 39564,
+    "index": 23
+  },
+  {
+    "name": "Require(20) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-mock/app/extend/agent.js",
+    "start": 1576749240825,
+    "end": 1576749240827,
+    "duration": 2,
+    "pid": 39564,
+    "index": 24
+  },
+  {
+    "name": "Load extend/context.js",
+    "start": 1576749240828,
+    "end": 1576749240873,
+    "duration": 45,
+    "pid": 39564,
+    "index": 25
+  },
+  {
+    "name": "Require(21) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-security/app/extend/context.js",
+    "start": 1576749240828,
+    "end": 1576749240835,
+    "duration": 7,
+    "pid": 39564,
+    "index": 26
+  },
+  {
+    "name": "Require(22) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-jsonp/app/extend/context.js",
+    "start": 1576749240835,
+    "end": 1576749240836,
+    "duration": 1,
+    "pid": 39564,
+    "index": 27
+  },
+  {
+    "name": "Require(23) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-i18n/app/extend/context.js",
+    "start": 1576749240836,
+    "end": 1576749240837,
+    "duration": 1,
+    "pid": 39564,
+    "index": 28
+  },
+  {
+    "name": "Require(24) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-multipart/app/extend/context.js",
+    "start": 1576749240837,
+    "end": 1576749240869,
+    "duration": 32,
+    "pid": 39564,
+    "index": 29
+  },
+  {
+    "name": "Require(25) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-view/app/extend/context.js",
+    "start": 1576749240869,
+    "end": 1576749240871,
+    "duration": 2,
+    "pid": 39564,
+    "index": 30
+  },
+  {
+    "name": "Require(26) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg/app/extend/context.js",
+    "start": 1576749240871,
+    "end": 1576749240872,
+    "duration": 1,
+    "pid": 39564,
+    "index": 31
+  },
+  {
+    "name": "Load agent.js",
+    "start": 1576749240874,
+    "end": 1576749240879,
+    "duration": 5,
+    "pid": 39564,
+    "index": 32
+  },
+  {
+    "name": "Require(27) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-security/agent.js",
+    "start": 1576749240874,
+    "end": 1576749240874,
+    "duration": 0,
+    "pid": 39564,
+    "index": 33
+  },
+  {
+    "name": "Require(28) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-onerror/agent.js",
+    "start": 1576749240874,
+    "end": 1576749240874,
+    "duration": 0,
+    "pid": 39564,
+    "index": 34
+  },
+  {
+    "name": "Require(29) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-watcher/agent.js",
+    "start": 1576749240874,
+    "end": 1576749240875,
+    "duration": 1,
+    "pid": 39564,
+    "index": 35
+  },
+  {
+    "name": "Require(30) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-schedule/agent.js",
+    "start": 1576749240876,
+    "end": 1576749240877,
+    "duration": 1,
+    "pid": 39564,
+    "index": 36
+  },
+  {
+    "name": "Require(31) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-logrotator/agent.js",
+    "start": 1576749240878,
+    "end": 1576749240878,
+    "duration": 0,
+    "pid": 39564,
+    "index": 37
+  },
+  {
+    "name": "Require(32) /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg/agent.js",
+    "start": 1576749240878,
+    "end": 1576749240878,
+    "duration": 0,
+    "pid": 39564,
+    "index": 38
+  },
+  {
+    "name": "Before Start in /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-watcher/lib/init.js:15:14",
+    "start": 1576749240884,
+    "end": 1576749240928,
+    "duration": 44,
+    "pid": 39564,
+    "index": 39
+  },
+  {
+    "name": "Before Start in /Users/theone/Programme/my-libs/egg-connector-rest/node_modules/egg-schedule/agent.js:12:9",
+    "start": 1576749240886,
+    "end": 1576749240916,
+    "duration": 30,
+    "pid": 39564,
+    "index": 40
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "name": "egg-connector-rest",
+  "version": "1.0.0",
+  "description": "",
+  "eggPlugin": {
+    "name": "connectorRest"
+  },
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin",
+    "egg-remote",
+    "restful"
+  ],
+  "dependencies": {
+    "egg-mongoose": "^3.2.0",
+    "egg-sequelize": "^5.2.0",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg": "^2.16.0",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "eslint": "^5.13.0",
+    "eslint-config-egg": "^7.1.0",
+    "mysql2": "^2.0.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
+    "test-local": "DEBUG='egg-connector-rest:*' egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
+    "pkgfiles": "egg-bin pkgfiles",
+    "autod": "autod"
+  },
+  "files": [
+    "config",
+    "agent.js",
+    "lib",
+    "app.js"
+  ],
+  "ci": {
+    "version": "8, 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eggjs/egg-connector-rest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eggjs/egg/issues"
+  },
+  "homepage": "https://github.com/eggjs/egg-connector-rest#readme",
+  "author": "theone1006",
+  "license": "MIT"
+}
