@@ -25,25 +25,26 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
     basePath: '/v1',
   };
 
-  const mockModels = [{
-    model: {},
-    modelName: 'Pet',
-    settings: {
-      definition: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'integer',
-            format: 'int64',
-          },
-          name: {
-            type: 'string',
+  const mockModels = [
+    {
+      model: {},
+      modelName: 'Pet',
+      settings: {
+        definition: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              format: 'int64',
+            },
+            name: {
+              type: 'string',
+            },
           },
         },
       },
     },
-  }];
-
+  ];
 
   before(() => {
     app = mock.app({
@@ -70,6 +71,16 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       assert(swaggerRoot.swagger === docOptions.swagger);
       assert.deepEqual(swaggerRoot.info, docOptions.info);
       assert(typeof swaggerRoot.error === 'undefined');
+    });
+  });
+
+  describe('addOperationId', () => {
+    it('addOperationId throw error', () => {
+      const instance = new RestSwagger({});
+      instance.addOperationId();
+      instance.addOperationId('unique');
+      instance.addOperationId('unique');
+      assert(instance.uniqueOperationIds.has('unique'));
     });
   });
 
@@ -108,9 +119,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
 
       assert.deepEqual(actual, expected);
     });
-
   });
-
 
   describe('prototype.createDefinitions 创建定义', () => {
     const mockLoadModels = [
@@ -197,6 +206,181 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
     });
   });
 
+  describe('extendDefinitions', () => {
+    it('extendDefinitions', () => {
+      const instance = new RestSwagger(options);
+      const extendDefinitions = {
+        accesstoken: {
+          type: 'object',
+          description: 'accessToken',
+          properties: {
+            id: {
+              type: 'integer',
+            },
+            createdAt: { type: 'string', format: 'date' },
+            updatedAt: { type: 'string', format: 'date' },
+          },
+        },
+      };
+
+      instance.extendDefinitions(extendDefinitions);
+      const actual = instance.swaggerRoot.definitions;
+      const expected = {
+        accesstoken: {
+          type: 'object',
+          description: 'accessToken',
+          properties: {
+            id: {
+              type: 'integer',
+            },
+            createdAt: { type: 'string', format: 'date' },
+            updatedAt: { type: 'string', format: 'date' },
+          },
+        },
+      };
+
+      assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('getDefinitionSchemaRef', () => {
+    it('getDefinitionSchemaRef with error', () => {
+      const instance = new RestSwagger(options);
+      const actual = instance.getDefinitionSchemaRef();
+      const expected = '#/definitions/';
+
+      assert(actual === expected);
+    });
+  });
+  describe('createModelPaths 创建多个 path 信息', () => {
+    it('createModelPaths success', () => {
+      const mockRemoteItems = {
+        index: {
+          summary: '简介',
+          description: '具体描述',
+          isStatic: true,
+          parameters: [
+            {
+              name: 'status',
+              in: 'query',
+              description: 'desc',
+              required: false,
+            },
+          ],
+          responses: {
+            200: {
+              description: 'success',
+              schema: {
+                type: 'array',
+                items: {
+                  ref: 'Pet',
+                },
+              },
+            },
+            400: {
+              description: 'not found',
+            },
+          },
+          http: {
+            verb: 'get',
+            path: '/',
+          },
+        },
+        show: {
+          description: '从数据源中通过 {{id}} 查找 Model 的实例 .',
+          accepts: [{
+            arg: 'id',
+            type: 'number',
+            description: 'Model id',
+            required: true,
+            http: {
+              source: 'path',
+            },
+          },
+          {
+            arg: 'filter',
+            type: 'object',
+            description: '定义 fields(字段) 和 include',
+          },
+          ],
+          returns: {
+            arg: 'data',
+            model: 'user',
+            type: 'object',
+            root: true,
+          },
+          http: {
+            verb: 'get',
+            path: '/:id',
+          },
+        },
+      };
+
+      const modelName = 'Pet';
+      const paths = {};
+
+      const instance = new RestSwagger(options, mockModels);
+
+      instance.createModelPaths(modelName, mockRemoteItems, 'pets', paths);
+
+      const actual = paths;
+
+      const expected = {
+        '/pets': {
+          tags: [ 'Pet' ],
+          summary: '简介',
+          description: '具体描述',
+          operationId: 'pet__index__get__',
+          produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
+          consumes: [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'application/xml',
+            'text/xml',
+            'multipart/form-data',
+          ],
+          parameters: [],
+          responses: {
+            200: {
+              description: 'success',
+              schema: {
+                type: 'array',
+                items: {
+                  ref: '#/definitions/Pet',
+                },
+              },
+            },
+            400: {
+              description: 'not found',
+            },
+          },
+          security: [],
+          deprecated: false,
+        },
+        '/pets/{id}': {
+          tags: [ 'Pet' ],
+          summary: '',
+          description: '从数据源中通过 {{id}} 查找 Model 的实例 .',
+          operationId: 'pet_prototype__show__get__id',
+          produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
+          consumes: [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'application/xml',
+            'text/xml',
+            'multipart/form-data',
+          ],
+          parameters: [],
+          responses: {},
+          security: [],
+          deprecated: false,
+        },
+      };
+
+      assert.deepEqual(actual, expected);
+    });
+  });
+
   describe('createModelSinglePath 创建单个的remote信息', () => {
     it('createModelSinglePath success', () => {
       const mockRemoteItem = {
@@ -234,11 +418,41 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       const modelName = 'Pet';
       const methodName = 'index';
 
+      const instance = new RestSwagger(options, mockModels);
 
+      const actual = instance.createModelSinglePath(modelName, methodName, mockRemoteItem);
+
+      const expected = {
+        tags: [ 'Pet' ],
+        summary: '简介',
+        description: '具体描述',
+        operationId: 'pet__index__get__',
+        produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
+        consumes: [
+          'application/json',
+          'application/x-www-form-urlencoded',
+          'application/xml',
+          'text/xml',
+          'multipart/form-data',
+        ],
+        parameters: [],
+        responses: {
+          200: {
+            description: 'success',
+            schema: {
+              type: 'array',
+              items: { ref: '#/definitions/Pet' },
+            },
+          },
+          400: { description: 'not found' },
+        },
+        security: [],
+        deprecated: false,
+      };
+
+      assert.deepEqual(actual, expected);
     });
-
   });
-
 
   describe('createUniqueOperationId 创建唯一的操作id', () => {
     it('createUniqueOperationId with isStatic true', () => {
@@ -248,16 +462,9 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       const verb = 'get';
       const endpoint = '/user/list';
 
-      const actual = RestSwagger.createUniqueOperationId(
-        modelName,
-        methodName,
-        isStatic,
-        verb,
-        endpoint
-      );
+      const actual = RestSwagger.createUniqueOperationId(modelName, methodName, isStatic, verb, endpoint);
 
       const expected = 'pet__index__get__user_list';
-
 
       assert(actual === expected);
     });
@@ -269,16 +476,9 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       const verb = 'get';
       const endpoint = '/user/list';
 
-      const actual = RestSwagger.createUniqueOperationId(
-        modelName,
-        methodName,
-        isStatic,
-        verb,
-        endpoint
-      );
+      const actual = RestSwagger.createUniqueOperationId(modelName, methodName, isStatic, verb, endpoint);
 
       const expected = 'pet_prototype__index__get__user_list';
-
 
       assert(actual === expected);
     });
@@ -288,18 +488,12 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       const methodName = 'index';
       const isStatic = false;
 
-      const actual = RestSwagger.createUniqueOperationId(
-        modelName,
-        methodName,
-        isStatic
-      );
+      const actual = RestSwagger.createUniqueOperationId(modelName, methodName, isStatic);
 
       const expected = 'pet_prototype__index__get_';
 
-
       assert(actual === expected);
     });
-
   });
 
   describe('createParametersOptions responses', () => {
@@ -351,10 +545,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           type: 'array',
           items: {
             type: 'string',
-            enum: [
-              'enabled',
-              'disabled',
-            ],
+            enum: [ 'enabled', 'disabled' ],
             default: 'enabled',
           },
           collectionFormat: 'multi',
@@ -415,10 +606,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           type: 'array',
           items: {
             type: 'string',
-            enum: [
-              'enabled',
-              'disabled',
-            ],
+            enum: [ 'enabled', 'disabled' ],
             default: 'enabled',
           },
           collectionFormat: 'multi',
@@ -432,10 +620,8 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       const actual = instance.createParametersOptions(parameters);
 
       assert.deepEqual(actual, expected);
-
     });
   });
-
 
   describe('createResponsesOptions responses', () => {
     it('responses test', () => {
@@ -487,7 +673,6 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
 
       assert.deepEqual(actual, expected);
     });
-
   });
 
   // describe('prototype.createRestPath 创建路径', () => {
