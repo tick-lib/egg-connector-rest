@@ -33,7 +33,7 @@ describe('test/sequelize-register-remote.test.js', () => {
   });
 
   describe('Article REST', () => {
-    it('should GET /', () => {
+    it('should GET /v1/articles', () => {
       return app
         .httpRequest()
         .get('/v1/articles')

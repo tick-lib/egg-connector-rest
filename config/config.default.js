@@ -14,6 +14,11 @@ exports.connectorRest = {
   models: app => app.model.models,
   jsonDir: app => app, // json 文件的路径
   modelName: Model => Model.name.toLowerCase(),
+  validateErrors: error => {
+    console.log(error);
+  },
+  // model 查找 id 的方法
+  modelFindByPk: (Model, id) => Model.findByPk(id),
   swaggerDoc: {
     // 参考 https://swagger.io/docs/specification/2-0/basic-structure/
     swagger: '2.0', // swagger 版本

@@ -102,7 +102,7 @@
         {
           "name": "filter",
           "in": "query",
-          "type": "json",
+          "type": "jsonString",
           "description": "定义 fields(字段)"
         }
       ],
