@@ -1,74 +1,89 @@
 {
   "settings": {
-    "description": "article description",
-    "acls": [{
-        "principalType": "ROLE",
-        "principalId": "$everyone",
-        "permission": "DENY",
-        "property": "*"
-      },
-      {
-        "principalType": "ROLE",
-        "principalId": "$everyone",
-        "permission": "ALLOW",
-        "property": "index"
-      },
-      {
-        "accessType": "READ",
-        "principalType": "ROLE",
-        "principalId": [ "$owner", "admin" ],
-        "permission": "ALLOW",
-        "property": "show"
-      },
-      {
-        "principalType": "ROLE",
-        "principalId": [ "create_user", "update_user", "admin"],
-        "permission": "ALLOW",
-        "property": "countAll"
-      },
-      {
-        "accessType": "READ",
-        "principalType": "ROLE",
-        "principalId": "update_user",
-        "permission": "ALLOW",
-        "property": "countAll"
-      },
-      {
-        "accessType": "WRITE",
-        "principalType": "ROLE",
-        "principalId": "create_user",
-        "permission": "ALLOW",
-        "property": [
-          "destroyById",
-          "create"
-        ]
-      },
-      {
-        "accessType": "WRITE",
-        "principalType": "ROLE",
-        "principalId": "update_user",
-        "permission": "ALLOW",
-        "property": [
-          "updateAttributes",
-          "destroyById"
-        ]
-      }
-    ]
+    "description": "article description"
   },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "index"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": [ "$owner", "admin" ],
+      "permission": "ALLOW",
+      "property": "show"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": [ "create_user", "update_user", "admin"],
+      "permission": "ALLOW",
+      "property": "countAll"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "update_user",
+      "permission": "ALLOW",
+      "property": "countAll"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "create_user",
+      "permission": "ALLOW",
+      "property": [
+        "destroyById",
+        "create"
+      ]
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "update_user",
+      "permission": "ALLOW",
+      "property": [
+        "updateAttributes",
+        "destroyById"
+      ]
+    }
+  ],
   "remotes": {
     "index": {
       "description": "从数据源中找到与筛选器匹配的所有实例.",
       "isStatic": true,
-      "accepts": [{
-        "arg": "filter",
-        "type": "object",
-        "description": "过滤定义 fields, where, include, order, offset, 以及 limit"
-      } ],
-      "returns": {
-        "arg": "data",
-        "type": "array",
-        "model": "article",
-        "root": true
+      "parameters": [
+        {
+          "in": "query",
+          "name": "where",
+          "type": "jsonString",
+          "description": "where"
+        },
+        {
+          "in": "query",
+          "name": "limit",
+          "type": "integer",
+          "description": "limit"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "array",
+            "items": {
+              "ref": "article"
+            }
+          }
+        }
       },
       "http": {
         "verb": "get",
@@ -77,26 +92,27 @@
     },
     "show": {
       "description": "从数据源中通过 {{id}} 查找 Model 的实例 .",
-      "accepts": [{
-          "arg": "id",
-          "type": "number",
+      "parameters": [{
+          "name": "id",
+          "type": "integer",
           "description": "Model id",
           "required": true,
-          "http": {
-            "source": "path"
-          }
+          "in": "path"
         },
         {
-          "arg": "filter",
-          "type": "object",
-          "description": "定义 fields(字段) 和 include"
+          "name": "filter",
+          "in": "query",
+          "type": "json",
+          "description": "定义 fields(字段)"
         }
       ],
-      "returns": {
-        "arg": "data",
-        "model": "article",
-        "type": "object",
-        "root": true
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+             "ref": "article"
+          }
+        }
       },
       "http": {
         "verb": "get",
@@ -105,23 +121,23 @@
     },
     "create": {
       "summary": "创建模型的一个新实例并将其持久化到数据库中.",
-      "accessType": "WRITE",
       "isStatic": true,
-      "accepts": {
-        "arg": "data",
+      "parameters": [{
+        "in": "body",
+        "name": "body",
         "type": "object",
-        "model": "article",
-        "description": "Model 实例数据",
-        "root": true,
-        "http": {
-          "source": "body"
+        "required": true,
+        "schema": {
+          "ref": "article"
         }
-      },
-      "returns": {
-        "arg": "data",
-        "model": "article",
-        "type": "object",
-        "root": true
+      }],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+             "ref": "article"
+          }
+        }
       },
       "http": {
         "verb": "post",
@@ -130,33 +146,32 @@
     },
     "updateAttributes": {
       "summary": "更新模型实例的属性并将其持久化到数据源中.",
-      "accessType": "WRITE",
       "isStatic": false,
-      "accepts": [{
-          "arg": "data",
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
           "type": "object",
-          "model": "article",
-          "root": true,
-          "http": {
-            "source": "body"
-          },
-          "description": "模型属性名称/值对的对象"
+          "required": true,
+          "schema": {
+            "ref": "article"
+          }
         },
         {
+          "in": "path",
           "arg": "id",
           "type": "integer",
           "description": "Model id",
-          "required": true,
-          "http": {
-            "source": "path"
-          }
+          "required": true
         }
       ],
-      "returns": {
-        "arg": "data",
-        "model": "article",
-        "type": "object",
-        "root": true
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+             "ref": "article"
+          }
+        }
       },
       "http": {
         "verb": "put",
@@ -164,39 +179,54 @@
       }
     },
     "destroyById": {
-      "aliases": ["destroy", "removeById"],
       "isStatic": true,
       "summary": "通过 {{id}} 获取 Model 实例 并将其从数据源中删除.",
-      "accepts": {
-        "arg": "id",
-        "type": "integer",
-        "description": "Model id",
-        "required": true,
-        "http": {
-          "source": "path"
+      "parameters": [
+        {
+          "in": "path",
+          "arg": "id",
+          "type": "integer",
+          "description": "Model id",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+             "ref": "article"
+          }
         }
       },
       "http": {
-        "verb": "del",
+        "verb": "delete",
         "path": "/:id"
-      },
-      "returns": {
-        "arg": "count",
-        "type": "object",
-        "root": true
       }
     },
     "countAll": {
       "summary": "统计 Model 实例数量可以使用, 可以使用 where 参数.",
       "isStatic": true,
-      "accepts": {
-        "arg": "where",
-        "type": "object",
-        "description": "where 条件"
-      },
-      "returns": {
-        "arg": "count",
-        "type": "number"
+      "parameters": [
+        {
+          "name": "filter",
+          "in": "query",
+          "type": "json",
+          "description": "定义过滤"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        }
       },
       "http": {
         "verb": "get",
@@ -206,50 +236,73 @@
     "exists": {
       "summary": "通过 {{id}} 获取 Model 实例 是否存在.",
       "isStatic": true,
-      "accepts": {
-        "arg": "id",
-        "type": "integer",
-        "description": "Model id",
-        "required": true,
-        "http": {
-          "source": "path"
+      "parameters": [
+        {
+          "in": "path",
+          "arg": "id",
+          "type": "integer",
+          "description": "Model id",
+          "required": true
         }
-      },
+      ],
       "http": {
         "verb": "get",
         "path": "/exists/:id"
       },
-      "returns": {
-        "arg": "exists",
-        "type": "bool"
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "exists": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
       }
     },
     "updateAll": {
       "summary": "批量更新Model 所有实例",
       "isStatic": true,
-      "accepts": [{
-        "arg": "data",
-        "type": "object",
-        "description": "Model 需要更新的数据",
-        "http": {
-          "source": "body"
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "type": "object",
+          "required": true,
+          "schema": {
+            "ref": "article"
+          }
         },
-        "root": true
-      }, {
-        "arg": "where",
-        "type": "object",
-        "description": "where 条件",
-        "http": {
-          "source": "query"
+        {
+          "in": "query",
+          "name": "where",
+          "type": "json",
+          "description": "where"
+        },
+        {
+          "in": "query",
+          "name": "limit",
+          "type": "integer",
+          "description": "limit"
         }
-      }],
+      ],
       "http": {
         "verb": "put",
         "path": "/"
       },
-      "returns": {
-        "arg": "affectedRows",
-        "type": "object"
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "array",
+            "items": {
+              "ref": "article"
+            }
+          }
+        }
       }
     }
   }

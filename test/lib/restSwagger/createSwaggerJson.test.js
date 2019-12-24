@@ -288,20 +288,21 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
         },
         show: {
           description: '从数据源中通过 {{id}} 查找 Model 的实例 .',
-          accepts: [{
-            arg: 'id',
-            type: 'number',
-            description: 'Model id',
-            required: true,
-            http: {
-              source: 'path',
+          parameters: [
+            {
+              arg: 'id',
+              type: 'number',
+              description: 'Model id',
+              required: true,
+              http: {
+                source: 'path',
+              },
             },
-          },
-          {
-            arg: 'filter',
-            type: 'object',
-            description: '定义 fields(字段) 和 include',
-          },
+            {
+              arg: 'filter',
+              type: 'object',
+              description: '定义 fields(字段) 和 include',
+            },
           ],
           returns: {
             arg: 'data',
@@ -327,53 +328,57 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
 
       const expected = {
         '/pets': {
-          tags: [ 'Pet' ],
-          summary: '简介',
-          description: '具体描述',
-          operationId: 'pet__index__get__',
-          produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
-          consumes: [
-            'application/json',
-            'application/x-www-form-urlencoded',
-            'application/xml',
-            'text/xml',
-            'multipart/form-data',
-          ],
-          parameters: [],
-          responses: {
-            200: {
-              description: 'success',
-              schema: {
-                type: 'array',
-                items: {
-                  ref: '#/definitions/Pet',
+          get: {
+            tags: [ 'Pet' ],
+            summary: '简介',
+            description: '具体描述',
+            operationId: 'pet__index__get__',
+            produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
+            consumes: [
+              'application/json',
+              'application/x-www-form-urlencoded',
+              'application/xml',
+              'text/xml',
+              'multipart/form-data',
+            ],
+            parameters: [],
+            responses: {
+              200: {
+                description: 'success',
+                schema: {
+                  type: 'array',
+                  items: {
+                    ref: '#/definitions/Pet',
+                  },
                 },
               },
+              400: {
+                description: 'not found',
+              },
             },
-            400: {
-              description: 'not found',
-            },
+            security: [],
+            deprecated: false,
           },
-          security: [],
-          deprecated: false,
         },
         '/pets/{id}': {
-          tags: [ 'Pet' ],
-          summary: '',
-          description: '从数据源中通过 {{id}} 查找 Model 的实例 .',
-          operationId: 'pet_prototype__show__get__id',
-          produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
-          consumes: [
-            'application/json',
-            'application/x-www-form-urlencoded',
-            'application/xml',
-            'text/xml',
-            'multipart/form-data',
-          ],
-          parameters: [],
-          responses: {},
-          security: [],
-          deprecated: false,
+          get: {
+            tags: [ 'Pet' ],
+            summary: '',
+            description: '从数据源中通过 {{id}} 查找 Model 的实例 .',
+            operationId: 'pet_prototype__show__get__id',
+            produces: [ 'application/json', 'application/xml', 'text/xml', 'application/javascript', 'text/javascript' ],
+            consumes: [
+              'application/json',
+              'application/x-www-form-urlencoded',
+              'application/xml',
+              'text/xml',
+              'multipart/form-data',
+            ],
+            parameters: [],
+            responses: {},
+            security: [],
+            deprecated: false,
+          },
         },
       };
 

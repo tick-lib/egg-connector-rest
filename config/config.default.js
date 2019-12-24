@@ -1,4 +1,5 @@
 'use strict';
+// eslint-disable
 
 /**
  * egg-connector-rest default config
@@ -32,4 +33,9 @@ exports.connectorRest = {
     host: '<your.site>',
     basePath: '/v1',
   },
+};
+
+
+exports.validate = {
+  enable: true,
 };

@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "eggPlugin": {
-    "name": "connectorRest"
+    "name": "connectorRest",
+    "dependencies": [
+      "validate"
+    ]
   },
   "keywords": [
     "egg",
@@ -13,9 +16,9 @@
     "restful"
   ],
   "dependencies": {
-    "egg-mongoose": "^3.2.0",
-    "egg-sequelize": "^5.2.0",
-    "lodash": "^4.17.15"
+    "egg-validate": "^2.0.2",
+    "lodash": "^4.17.15",
+    "parameter": "^3.6.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -24,6 +27,8 @@
     "egg-bin": "^4.11.0",
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.21.0",
+    "egg-mongoose": "^3.2.0",
+    "egg-sequelize": "^5.2.0",
     "eslint": "^5.13.0",
     "eslint-config-egg": "^7.1.0",
     "mysql2": "^2.0.2"
@@ -33,7 +38,7 @@
   },
   "scripts": {
     "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
-    "test-local": "DEBUG='egg-connector-rest:*' egg-bin test",
+    "test-local": "DEBUG=false egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
