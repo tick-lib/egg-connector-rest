@@ -9,4 +9,8 @@ module.exports = {
     enable: true,
     package: 'egg-connector-rest',
   },
+  validate: {
+    enable: true,
+    package: 'egg-validate',
+  },
 };

@@ -25,8 +25,18 @@
 ## Install
 
 ```bash
-$ npm i egg-connector-rest --save
+npm i egg-connector-rest --save
 ```
+
+## feature
+
+1. [X] git-flow
+2. [X] restful api
+3. [X] swagger ui
+4. [X] validate
+5. [ ] access control, [参考](https://loopback.io/doc/en/lb3/Remote-methods#adding-acls-to-remote-methods)
+6. [X] mysql
+7. [ ] mongoose
 
 ## Usage
 
