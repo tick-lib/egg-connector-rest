@@ -5,4 +5,5 @@ module.exports = app => {
 
   router.get('/', controller.home.index);
   app.registerRemote(app.model.Article);
+  app.registerRemote(app.model.User);
 };

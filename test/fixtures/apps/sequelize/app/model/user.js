@@ -21,6 +21,10 @@ module.exports = app => {
     return User.findAll(filter);
   };
 
+  User.BelongOwnerById = async function BelongOwnerById(userId, id) {
+    return parseInt(userId, 10) === parseInt(id, 10);
+  };
+
   User.prototype.show = async function() {
     return this;
   };

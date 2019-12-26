@@ -139,7 +139,7 @@
         },
         {
           "in": "path",
-          "arg": "id",
+          "name": "id",
           "type": "integer",
           "description": "Model id",
           "required": true
@@ -164,7 +164,7 @@
       "parameters": [
         {
           "in": "path",
-          "arg": "id",
+          "name": "id",
           "type": "integer",
           "description": "Model id",
           "required": true

@@ -33,10 +33,10 @@ describe('test/sequelize-register-remote.test.js', () => {
   });
 
   describe('Article REST', () => {
-    it('should GET /v1/articles', () => {
+    it('should GET /api/v1/articles', () => {
       return app
         .httpRequest()
-        .get('/v1/articles')
+        .get('/api/v1/articles')
         .expect(200);
     });
   });

@@ -290,22 +290,21 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           description: '从数据源中通过 {{id}} 查找 Model 的实例 .',
           parameters: [
             {
-              arg: 'id',
+              name: 'id',
               type: 'number',
               description: 'Model id',
               required: true,
-              http: {
-                source: 'path',
-              },
+              in: 'path',
             },
             {
-              arg: 'filter',
-              type: 'object',
+              name: 'filter',
+              type: 'jsonString',
               description: '定义 fields(字段) 和 include',
+              in: 'path',
             },
           ],
           returns: {
-            arg: 'data',
+            name: 'data',
             model: 'user',
             type: 'object',
             root: true,

@@ -26,6 +26,15 @@ describe('test/lib/accessControl/index.test.js', () => {
   afterEach(mock.restore);
 
   describe('filterAcls()', () => {
+    it('should return empty with empty arguments', () => {
+      const accessControl = createAccessControl(app, mockConfig);
+
+      const actual = accessControl.filterAcls();
+      const expected = [];
+
+      assert.deepEqual(actual, expected);
+
+    });
     it('should return filter and sort array with methodName', () => {
       const acls = [
         {
@@ -39,6 +48,11 @@ describe('test/lib/accessControl/index.test.js', () => {
           permission: 'ALLOW',
           methods: 'index',
           weight: -1,
+        },
+        {
+          roles: 'admin',
+          permission: 'ALLOW',
+          methods: 'create',
         },
         {
           roles: [ 'owner', 'admin' ],
@@ -78,6 +92,11 @@ describe('test/lib/accessControl/index.test.js', () => {
           permission: 'DENY',
           methods: [ 'updateAttributes', 'create' ],
           weight: 10,
+        },
+        {
+          roles: 'admin',
+          permission: 'ALLOW',
+          methods: 'create',
         },
         {
           roles: 'create_user',

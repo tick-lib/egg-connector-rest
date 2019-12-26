@@ -16,6 +16,9 @@ module.exports = app => {
 
   // 判断是否属于自身
   Article.BelongOwnerById = async function BelongOwnerById(userId, id) {
+    if (!userId || !id) {
+      return false;
+    }
     const instance = await Article.findOne({ where: { userId, id } });
     return !!instance;
   };

@@ -1,28 +1,25 @@
 {
-    "settings": {
-        "description": "角色",
-        "hidden": [
-            "version"
-        ],
-        "plural": "roles",
-        "acls": [
-            {
-                "principalType": "ROLE",
-                "principalId": "$everyone",
-                "permission": "DENY",
-                "property": "*"
-            },
-            {
-                "principalType": "ROLE",
-                "principalId": "admin",
-                "permission": "ALLOW",
-                "property": "*"
-            }
-        ]
+  "settings": {
+      "description": "角色",
+      "plural": "roles"
+  },
+  "acls": [
+    {
+      "roles": "*",
+      "permission": "DENY",
+      "methods": "*",
+      "weight": -10
     },
-    "disabledRemotes": [
-        "createInstance",
-        "updateAll",
-        "destroy"
-    ]
+    {
+      "roles": "admin",
+      "permission": "ALLOW",
+      "methods": "*"
+    },
+    {
+      "roles": "admin",
+      "permission": "DENY",
+      "methods": ["createInstance", "updateAll", "destroy"],
+      "weight": 100
+    }
+  ]
 }
