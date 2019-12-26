@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "eggPlugin": {
-    "name": "connectorRest",
-    "dependencies": [
-      "validate"
-    ]
+    "name": "connectorRest"
   },
   "keywords": [
     "egg",
@@ -38,7 +35,7 @@
   },
   "scripts": {
     "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
-    "test-local": "DEBUG='egg-connector-rest:registerRemote:index' egg-bin test",
+    "test-local": "DEBUG='egg-connector-rest:*' egg-bin test",
     "cov": "COV_EXCLUDES=config/* egg-bin cov",
     "lint": "eslint .",
     "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",

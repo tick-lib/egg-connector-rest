@@ -1,23 +1,42 @@
 'use strict';
-module.exports = app => {
-  const { STRING, INTEGER } = app.Sequelize;
-  const Article = app.model.define('article', {
-    title: STRING(30),
-    desc: STRING(30),
-    content: STRING(30),
-    userId: INTEGER,
-  }, {
-    timestamps: false,
-  });
 
-  // const typeName = Article.name;
+// import * as debug from 'debug';
+// const logger = debug('app:model:admin');
 
-  // 判断是否属于自身
+module.exports = function Admin(app) {
+  const mongoose = app.mongoose;
+  const Schema = mongoose.Schema;
+
+  const ArticleSchema = new Schema(
+    {
+      title: {
+        type: String,
+      },
+      desc: {
+        type: String,
+      },
+      content: {
+        type: String,
+      },
+      userId: {
+        type: Number,
+      },
+    },
+    {
+      collection: 'articles',
+      timestamps: false,
+    }
+  );
+
+  ArticleSchema.virtual('id').get(id => id);
+  ArticleSchema.set('toJSON', { virtuals: true });
+  const Article = mongoose.model('Article', ArticleSchema);
+
   Article.BelongOwnerById = async function BelongOwnerById(userId, id) {
     if (!userId || !id) {
       return false;
     }
-    const instance = await Article.findOne({ where: { userId, id } });
+    const instance = await Article.findOne({ userId, id });
     return !!instance;
   };
 
@@ -33,16 +52,18 @@ module.exports = app => {
     return error;
   };
 
+  Article.findByPk = Article.findById;
 
   Article.index = async function(ctx, filter) {
-    return Article.findAll(filter);
+    return Article.find(filter);
   };
 
   Article.prototype.show = async function() {
     return this;
   };
+
   Article.countAll = async function(ctx, filter) {
-    const count = await Article.count(filter);
+    const count = await Article.countDocuments(filter);
     return { count };
   };
 
@@ -54,24 +75,24 @@ module.exports = app => {
   Article.destroyById = async function(ctx, id) {
     const instance = await this.findByPk(id);
     if (instance) {
-      return instance.destroy();
+      return instance.remove();
     }
     throw this.errorModelNotFound(`Unknown ${this.name} id ${id}`);
   };
 
   Article.create = async function(ctx, data) {
-    const instance = Article.build(data);
+    const instance = new Article(data);
     return instance.save();
   };
 
   Article.prototype.updateAttributes = async function(ctx, data) {
     const instance = this;
-    return instance.update(data);
+    return instance.findOneAndUpdate({ _id: instance._id }, data);
   };
 
   Article.updateAll = async function(ctx, data, where = {}) {
-    const [ affectedCount ] = await Article.update(data, { where });
-    return { affected: affectedCount };
+    const { ok } = await Article.update({ where }, data);
+    return { affected: ok };
   };
 
   return Article;

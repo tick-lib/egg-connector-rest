@@ -1,8 +1,12 @@
 'use strict';
 
 module.exports = {
-  validate: {
+  mongoose: {
     enable: true,
-    package: 'egg-validate',
+    package: 'egg-mongoose',
+  },
+  connectorRest: {
+    enable: true,
+    package: 'egg-connector-rest',
   },
 };
