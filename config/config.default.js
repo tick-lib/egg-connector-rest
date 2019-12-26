@@ -49,6 +49,17 @@ exports.connectorRest = {
     host: '<your.site>',
     basePath: '/v1',
   },
+  extendDefinitions: {
+    Test: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+          format: 'int64',
+        },
+      },
+    },
+  },
 };
 
 

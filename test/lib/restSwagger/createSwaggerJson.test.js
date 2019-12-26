@@ -29,17 +29,16 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
     {
       model: {},
       modelName: 'Pet',
-      settings: {
-        definition: {
-          type: 'object',
-          properties: {
-            id: {
-              type: 'integer',
-              format: 'int64',
-            },
-            name: {
-              type: 'string',
-            },
+      settings: {},
+      definition: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+            format: 'int64',
+          },
+          name: {
+            type: 'string',
           },
         },
       },
@@ -128,16 +127,16 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
         model: {},
         settings: {
           description: 'foo desc',
-          definition: {
-            type: 'object',
-            properties: {
-              id: {
-                type: 'integer',
-                format: 'int64',
-              },
-              name: {
-                type: 'string',
-              },
+        },
+        definition: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              format: 'int64',
+            },
+            name: {
+              type: 'string',
             },
           },
         },
@@ -223,7 +222,22 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
         },
       };
 
-      instance.extendDefinitions(extendDefinitions);
+      const mockLoaderModels = [
+        {
+          extendDefinitions: {
+            test: {
+              type: 'object',
+              description: 'test',
+              properties: {
+                id: {
+                  type: 'integer',
+                },
+              },
+            },
+          },
+        },
+      ];
+      instance.extendDefinitions(extendDefinitions, mockLoaderModels);
       const actual = instance.swaggerRoot.definitions;
       const expected = {
         accesstoken: {
@@ -235,6 +249,15 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
             },
             createdAt: { type: 'string', format: 'date' },
             updatedAt: { type: 'string', format: 'date' },
+          },
+        },
+        test: {
+          type: 'object',
+          description: 'test',
+          properties: {
+            id: {
+              type: 'integer',
+            },
           },
         },
       };
