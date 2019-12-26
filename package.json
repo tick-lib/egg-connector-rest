@@ -39,7 +39,7 @@
   "scripts": {
     "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
     "test-local": "DEBUG='egg-connector-rest:registerRemote:createController' egg-bin test",
-    "cov": "egg-bin cov",
+    "cov": "COV_EXCLUDES=config/* egg-bin cov",
     "lint": "eslint .",
     "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
     "pkgfiles": "egg-bin pkgfiles",

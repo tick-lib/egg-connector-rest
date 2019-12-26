@@ -4,56 +4,36 @@
   },
   "acls": [
     {
-      "principalType": "ROLE",
-      "principalId": "$everyone",
+      "roles": "*",
       "permission": "DENY",
-      "property": "*"
+      "methods": "*",
+      "weight": -10
     },
     {
-      "principalType": "ROLE",
-      "principalId": "$everyone",
+      "roles": "everyone",
       "permission": "ALLOW",
-      "property": "index"
+      "methods": "index",
+      "weight": -1
     },
     {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": [ "$owner", "admin" ],
+      "roles": ["owner", "admin"],
       "permission": "ALLOW",
-      "property": "show"
+      "methods": "show"
     },
     {
-      "principalType": "ROLE",
-      "principalId": [ "create_user", "update_user", "admin"],
+      "roles": ["create_user", "update_user", "admin"],
       "permission": "ALLOW",
-      "property": "countAll"
+      "methods": "countAll"
     },
     {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "update_user",
+      "roles": "create_user",
       "permission": "ALLOW",
-      "property": "countAll"
+      "methods": ["destroyById", "create"]
     },
     {
-      "accessType": "WRITE",
-      "principalType": "ROLE",
-      "principalId": "create_user",
+      "roles": "update_user",
       "permission": "ALLOW",
-      "property": [
-        "destroyById",
-        "create"
-      ]
-    },
-    {
-      "accessType": "WRITE",
-      "principalType": "ROLE",
-      "principalId": "update_user",
-      "permission": "ALLOW",
-      "property": [
-        "updateAttributes",
-        "destroyById"
-      ]
+      "methods": ["updateAttributes", "destroyById"]
     }
   ],
   "remotes": {
