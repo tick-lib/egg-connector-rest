@@ -1,6 +1,6 @@
 'use strict';
 
-const _ = require('lodash');
+// const _ = require('lodash');
 const debug = require('debug')('egg-connector-rest:sequelize');
 
 module.exports = appInfo => {
@@ -21,9 +21,11 @@ module.exports = appInfo => {
     // 主要配置
     connectorRest: {
       enable: true,
-      models: app => _.map(app.model.models, item => item),
       jsonDir: () => `${appInfo.root}/app/model`,
-      modelName: Model => Model.name,
+      formatModelName: ModelName => ModelName.toLowerCase(),
+      getModel: (app, modelName) => {
+        return app.model[modelName];
+      },
       // 权限控制
       accessControl: async (ctx, Model, methodName, acls = []) => {
         const header = ctx.request.header;
@@ -40,8 +42,7 @@ module.exports = appInfo => {
 
         // 获取首个命中的规则
 
-        const matchRoles = [
-          '*', 'everyone', 'owner' ];
+        const matchRoles = [ '*', 'everyone', 'owner' ];
         if (roleName) {
           matchRoles.push(roleName);
         }
@@ -54,7 +55,6 @@ module.exports = appInfo => {
           return roles.some(item => {
             return matchRoles.indexOf(item) > -1;
           });
-
         });
 
         if (!filterAcls.length) {

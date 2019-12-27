@@ -4,6 +4,8 @@
   - 全局扩展
   - 独立字段
 2. 扩展 mongoose
+  - 加载依赖 model
+  - mongoose 加载到 model 进度不一致,因此放弃 model 引用
 
 ## 20191223 
 

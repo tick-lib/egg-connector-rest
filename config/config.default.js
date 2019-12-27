@@ -7,13 +7,9 @@
  * @property {String} SOME_KEY - some description
  */
 exports.connectorRest = {
-  /**
-   * @param {any} app 应用app
-   * 可以再次过滤不需要的 model
-   */
-  models: app => app.model.models,
-  jsonDir: app => app, // json 文件的路径
-  modelName: Model => Model.name.toLowerCase(),
+  jsonDir: () => __dirname + '/models', // json 文件的路径
+  formatModelName: ModelName => ModelName.toLowerCase(),
+  getModel: (app, modelName) => app.model[modelName],
   validateErrors: error => {
     console.log(error);
   },
