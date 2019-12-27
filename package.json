@@ -1,7 +1,7 @@
 {
   "name": "egg-connector-rest",
   "version": "1.0.0",
-  "description": "",
+  "description": "egg restful 插件",
   "eggPlugin": {
     "name": "connectorRest"
   },
@@ -13,7 +13,6 @@
     "restful"
   ],
   "dependencies": {
-    "egg-validate": "^2.0.2",
     "lodash": "^4.17.15",
     "parameter": "^3.6.0"
   },
