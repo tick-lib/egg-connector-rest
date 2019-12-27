@@ -3,35 +3,35 @@
 const assert = require('assert');
 const mock = require('egg-mock');
 
-const initArticles = require('./mock/mysql/article');
-const initUsers = require('./mock/mysql/user');
+const initArticles = require('./mock/mongodb/article');
+const initUsers = require('./mock/mongodb/user');
 
-describe('test/sequelize.test.js', () => {
+describe('test/mongoose.test.js', () => {
   let app;
   let ctx;
   before(async () => {
     app = mock.app({
-      baseDir: 'apps/sequelize',
+      baseDir: 'apps/mongoose',
     });
 
     await app.ready();
     ctx = app.mockContext();
-    await ctx.model.Article.sync({ force: true });
-    await ctx.model.User.sync({ force: true });
+
+    await ctx.model.Article.deleteMany({});
+    await ctx.model.User.deleteMany({});
 
     // 录入测试数据
-    await ctx.model.Article.bulkCreate(initArticles);
-    await ctx.model.User.bulkCreate(initUsers);
+    await ctx.model.Article.insertMany(initArticles);
+    await ctx.model.User.insertMany(initUsers);
   });
 
   after(() => app.close());
   afterEach(mock.restore);
 
   it('test', async () => {
-    const num = await ctx.model.Article.count();
+    const num = await ctx.model.Article.countDocuments();
     assert.equal(num, 3);
   });
-
 
   describe('acl 权限控制', () => {
     describe('access control with article', () => {
@@ -59,42 +59,46 @@ describe('test/sequelize.test.js', () => {
         assert(actual.message === 'Authorization Error');
       });
 
-      it('should GET /api/v1/articles/1 with owner', async () => {
+      it('should GET /api/v1/articles/aaaaaaaaaaaaaaaaaaaaa001 with owner', async () => {
         const res = await app
           .httpRequest()
-          .get('/api/v1/articles/1')
-          .set('userid', 1)
+          .get('/api/v1/articles/aaaaaaaaaaaaaaaaaaaaa001')
+          .set('userid', 'aaaaaaaaaaaaaaaaaaaab001')
           .set('Accept', 'application/json');
 
         const actual = res.body;
 
         const expected = {
-          id: 1,
+          __v: 0,
+          _id: 'aaaaaaaaaaaaaaaaaaaaa001',
+          id: 'aaaaaaaaaaaaaaaaaaaaa001',
           title: 'title1',
           desc: 'desc1',
           content: 'content1 belong user 2',
-          userId: 1,
+          userId: 'aaaaaaaaaaaaaaaaaaaab001',
         };
 
         assert(res.status === 200);
         assert.deepEqual(actual, expected);
       });
 
-      it('should GET /api/v1/articles/1 with admin role', async () => {
+      it('should GET /api/v1/articles/aaaaaaaaaaaaaaaaaaaaa001 with admin role', async () => {
         const res = await app
           .httpRequest()
-          .get('/api/v1/articles/1')
+          .get('/api/v1/articles/aaaaaaaaaaaaaaaaaaaaa001')
           .set('role', 'admin')
           .set('Accept', 'application/json');
 
         const actual = res.body;
 
         const expected = {
-          id: 1,
+          __v: 0,
+          _id: 'aaaaaaaaaaaaaaaaaaaaa001',
+          id: 'aaaaaaaaaaaaaaaaaaaaa001',
           title: 'title1',
           desc: 'desc1',
           content: 'content1 belong user 2',
-          userId: 1,
+          userId: 'aaaaaaaaaaaaaaaaaaaab001',
         };
 
         assert(res.status === 200);
@@ -141,21 +145,26 @@ describe('test/sequelize.test.js', () => {
           });
 
         const expected = {
-          id: 4,
           title: 'create',
           desc: 'desc-creater',
           content: 'create content',
         };
 
+        const actual = {
+          title: res.body.title,
+          desc: res.body.desc,
+          content: res.body.content,
+        };
+
         assert(res.status === 200);
-        assert.deepEqual(res.body, expected);
+        assert.deepEqual(actual, expected);
       });
 
-      it('should UPDATE /api/v1/articles/4 with update_user', async () => {
+      it('should UPDATE /api/v1/articles/aaaaaaaaaaaaaaaaaaaaa003 with update_user', async () => {
         app.mockCsrf();
         const res = await app
           .httpRequest()
-          .put('/api/v1/articles/4')
+          .put('/api/v1/articles/aaaaaaaaaaaaaaaaaaaaa003')
           .set('role', 'update_user')
           .set('Accept', 'application/json')
           .send({
@@ -163,31 +172,35 @@ describe('test/sequelize.test.js', () => {
           });
 
         const expected = {
-          id: 4,
+          __v: 1,
+          _id: 'aaaaaaaaaaaaaaaaaaaaa003',
+          id: 'aaaaaaaaaaaaaaaaaaaaa003',
           title: 'update',
-          desc: 'desc-creater',
-          content: 'create content',
-          userId: null,
+          desc: 'desc3',
+          content: 'content3 belong user 1',
+          userId: 'aaaaaaaaaaaaaaaaaaaab001',
         };
 
         assert(res.status === 200);
         assert.deepEqual(res.body, expected);
       });
 
-      it('should DELETE /api/v1/articles/4 with update_user', async () => {
+      it('should DELETE /api/v1/articles/aaaaaaaaaaaaaaaaaaaaa002 with update_user', async () => {
         app.mockCsrf();
         const res = await app
           .httpRequest()
-          .delete('/api/v1/articles/4')
+          .delete('/api/v1/articles/aaaaaaaaaaaaaaaaaaaaa002')
           .set('role', 'update_user')
           .set('Accept', 'application/json');
 
         const expected = {
-          id: 4,
-          title: 'update',
-          desc: 'desc-creater',
-          content: 'create content',
-          userId: null,
+          __v: 0,
+          _id: 'aaaaaaaaaaaaaaaaaaaaa002',
+          id: 'aaaaaaaaaaaaaaaaaaaaa002',
+          title: 'title2',
+          desc: 'desc2',
+          content: 'content2 belong user 2',
+          userId: 'aaaaaaaaaaaaaaaaaaaab002',
         };
 
         assert(res.status === 200);
@@ -195,6 +208,4 @@ describe('test/sequelize.test.js', () => {
       });
     });
   });
-
-
 });

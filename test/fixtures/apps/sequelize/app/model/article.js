@@ -1,6 +1,4 @@
 'use strict';
-const articleJSON = require('./article.json');
-
 module.exports = app => {
   const { STRING, INTEGER } = app.Sequelize;
   const Article = app.model.define('article', {
@@ -16,11 +14,12 @@ module.exports = app => {
 
   // 判断是否属于自身
   Article.BelongOwnerById = async function BelongOwnerById(userId, id) {
+    if (!userId || !id) {
+      return false;
+    }
     const instance = await Article.findOne({ where: { userId, id } });
     return !!instance;
   };
-
-  Article.settings = articleJSON.settings;
 
   /**
    * 排除未找到错误
@@ -74,8 +73,6 @@ module.exports = app => {
     const [ affectedCount ] = await Article.update(data, { where });
     return { affected: affectedCount };
   };
-
-  Article.remotes = articleJSON.remotes;
 
   return Article;
 };

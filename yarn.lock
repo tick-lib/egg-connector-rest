@@ -1954,6 +1954,10 @@ core-js@^2.0.0, core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
 
+core-js@^3.2.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.1.tgz#39d5e2e346258cc01eb7d44345b1c3c014ca3f05"
+
 core-util-is@^1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -2510,6 +2514,12 @@ egg-utils@^2.4.1:
   dependencies:
     mkdirp "^0.5.1"
     utility "^1.13.1"
+
+egg-validate@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/egg-validate/-/egg-validate-2.0.2.tgz#c236c730a3730fe4e0655e1a2799398178ab3dd3"
+  dependencies:
+    parameter "^3.0.0"
 
 egg-view@^2.1.2:
   version "2.1.2"
@@ -4003,7 +4013,7 @@ jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3:
     array-includes "^3.0.3"
     object.assign "^4.1.0"
 
-kareem@2.3.1:
+kareem@2.3.1, kareem@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.3.1.tgz#def12d9c941017fabfb00f873af95e9c99e1be87"
 
@@ -4469,6 +4479,18 @@ mongodb@3.3.5:
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
+
+mongoose-update-if-current@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/mongoose-update-if-current/-/mongoose-update-if-current-1.3.3.tgz#106199178a5a4af4891d7b909221f777e23e5b81"
+  dependencies:
+    core-js "^3.2.1"
+    kareem "^2.3.0"
+    regenerator-runtime "^0.13.3"
+
+mongoose-update-versioning@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/mongoose-update-versioning/-/mongoose-update-versioning-0.1.1.tgz#89549d9b6100f5718c653ce61edb1e30030260f0"
 
 mongoose@^5.4.20:
   version "5.8.1"
@@ -4950,6 +4972,10 @@ param-case@^2.1.0:
   dependencies:
     no-case "^2.2.0"
 
+parameter@^3.0.0, parameter@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/parameter/-/parameter-3.6.0.tgz#bcf81327e98e433c72c134830ec84d15e81b963d"
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
@@ -5366,7 +5392,7 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
-regenerator-runtime@^0.13.2:
+regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
 

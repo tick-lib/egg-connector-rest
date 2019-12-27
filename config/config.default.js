@@ -1,4 +1,5 @@
 'use strict';
+// eslint-disable
 
 /**
  * egg-connector-rest default config
@@ -6,13 +7,25 @@
  * @property {String} SOME_KEY - some description
  */
 exports.connectorRest = {
+  jsonDir: () => __dirname + '/models', // json 文件的路径
+  formatModelName: ModelName => ModelName.toLowerCase(),
+  getModel: (app, modelName) => app.model[modelName],
+  validateErrors: error => {
+    console.log(error);
+  },
+  // model 查找 id 的方法
+  modelFindByPk: (Model, id) => Model.findByPk(id),
+  // access control method
+
   /**
-   * @param {any} app 应用app
-   * 可以再次过滤不需要的 model
+   * 权限控制函数, 没有通过抛出报错
    */
-  models: app => app.model.models,
-  jsonDir: app => app, // json 文件的路径
-  modelName: Model => Model.name.toLowerCase(),
+  // eslint-disable-next-line no-unused-vars
+  accessControl: async (ctx, Model, modelName, acls) => {
+    // access control Failed
+    // throw new Error("Access control")
+    return true;
+  },
   swaggerDoc: {
     // 参考 https://swagger.io/docs/specification/2-0/basic-structure/
     swagger: '2.0', // swagger 版本
@@ -32,4 +45,20 @@ exports.connectorRest = {
     host: '<your.site>',
     basePath: '/v1',
   },
+  extendDefinitions: {
+    Test: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+          format: 'int64',
+        },
+      },
+    },
+  },
+};
+
+
+exports.validate = {
+  enable: true,
 };
