@@ -1,11 +1,11 @@
 'use strict';
 
-// import * as debug from 'debug';
-// const logger = debug('app:model:admin');
+const logger = require('debug')('app:model:admin');
 
 module.exports = function Admin(app) {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
+  const Types = mongoose.Types;
 
   const ArticleSchema = new Schema(
     {
@@ -19,7 +19,7 @@ module.exports = function Admin(app) {
         type: String,
       },
       userId: {
-        type: Number,
+        type: Types.ObjectId,
       },
     },
     {
@@ -27,6 +27,11 @@ module.exports = function Admin(app) {
       timestamps: false,
     }
   );
+
+  ArticleSchema.pre('save', function(next) {
+    this.increment();
+    next();
+  });
 
   ArticleSchema.virtual('id').get(id => id);
   ArticleSchema.set('toJSON', { virtuals: true });
@@ -36,7 +41,8 @@ module.exports = function Admin(app) {
     if (!userId || !id) {
       return false;
     }
-    const instance = await Article.findOne({ userId, id });
+    logger('userId: %o, id: %o', userId, id);
+    const instance = await Article.find({ userId, _id: id });
     return !!instance;
   };
 
@@ -55,7 +61,8 @@ module.exports = function Admin(app) {
   Article.findByPk = Article.findById;
 
   Article.index = async function(ctx, filter) {
-    return Article.find(filter);
+    const list = Article.find(filter);
+    return list;
   };
 
   Article.prototype.show = async function() {
@@ -75,7 +82,8 @@ module.exports = function Admin(app) {
   Article.destroyById = async function(ctx, id) {
     const instance = await this.findByPk(id);
     if (instance) {
-      return instance.remove();
+      await instance.remove();
+      return instance;
     }
     throw this.errorModelNotFound(`Unknown ${this.name} id ${id}`);
   };
@@ -87,7 +95,13 @@ module.exports = function Admin(app) {
 
   Article.prototype.updateAttributes = async function(ctx, data) {
     const instance = this;
-    return instance.findOneAndUpdate({ _id: instance._id }, data);
+    Object.keys(data).forEach(key => {
+      instance[key] = data[key];
+    });
+
+    await instance.save();
+
+    return instance;
   };
 
   Article.updateAll = async function(ctx, data, where = {}) {

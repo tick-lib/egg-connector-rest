@@ -5,11 +5,13 @@ module.exports = app => {
 
   router.get('/', controller.home.index);
 
-  app.ready(() => {
-    /**
-     * mongoose 需要在 ready 之后才能注册
-     */
-    app.registerRemote(app.model.Article);
-    app.registerRemote(app.model.User);
-  });
+  app.registerRemote('article', app.model.Article);
+  app.registerRemote('user', app.model.User);
+  // app.ready(() => {
+  //   /**
+  //    * mongoose 需要在 ready 之后才能注册
+  //    */
+  //   console.log('app.model ======= ');
+  //   console.log(app.model);
+  // });
 };

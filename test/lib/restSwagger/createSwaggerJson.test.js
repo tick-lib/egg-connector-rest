@@ -143,26 +143,25 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       },
       {
         modelName: 'bar',
-        model: {
-          createDefinition: () => ({
-            type: 'object',
-            properties: {
-              id: {
-                type: 'integer',
-                format: 'int64',
-              },
-              phone: {
-                type: 'string',
-              },
-            },
-          }),
-        },
+        model: {},
         settings: {
           description: 'bar desc',
         },
+        definition: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              format: 'int64',
+            },
+            phone: {
+              type: 'string',
+            },
+          },
+        },
       },
     ];
-    it('createDefinitions use define and func', () => {
+    it('createDefinitions use define', () => {
       const instance = new RestSwagger(options);
       instance.createDefinitions(mockLoadModels);
 

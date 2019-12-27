@@ -1,7 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
+// const _ = require('lodash');
 const debug = require('debug')('egg-connector-rest:mongoose');
+
+const { updateIfCurrentPlugin } = require('mongoose-update-if-current');
 
 module.exports = appInfo => {
   const config = {
@@ -15,7 +17,10 @@ module.exports = appInfo => {
         options: {
           useUnifiedTopology: true,
           useNewUrlParser: true,
+          debug: true,
+          useFindAndModify: false,
         },
+        plugins: [[ updateIfCurrentPlugin ]],
       },
       // 在 app.js 中提前启动, 正常模块需要在 beforeStart 启动
       loadModel: false,
@@ -26,14 +31,12 @@ module.exports = appInfo => {
     // 主要配置
     connectorRest: {
       enable: true,
-      models: app => {
-        return _.map(app.model, item => item);
-      },
       jsonDir: () => `${appInfo.root}/app/rest`,
-      modelName: Model => {
-        return Model.modelName.toLowerCase();
-      },
+      formatModelName: ModelName => ModelName.toLowerCase(),
       modelFindByPk: (Model, id) => Model.findById(id),
+      getModel: (app, modelName) => {
+        return app.model[modelName];
+      },
       // 权限控制
       accessControl: async (ctx, Model, methodName, acls = []) => {
         const header = ctx.request.header;
