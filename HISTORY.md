@@ -1,3 +1,8 @@
+# 20191228
+
+1. 格式化 `mongoose` 设置静态方法的方式
+  - `statics` 以及 `class`
+
 # 20191226
 
 1. [x] 扩展 `definitions`

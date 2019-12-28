@@ -1,0 +1,342 @@
+{
+  "settings": {
+    "description": "user description"
+  },
+  "acls": [
+    {
+      "roles": "*",
+      "permission": "DENY",
+      "methods": "*",
+      "weight": -10
+    },
+    {
+      "roles": "admin",
+      "permission": "ALLOW",
+      "methods": "*",
+      "weight": 20
+    },
+    {
+      "roles": "owner",
+      "permission": "ALLOW",
+      "methods": "show"
+    },
+    {
+      "roles": "create_user",
+      "permission": "ALLOW",
+      "methods": ["destroyById", "count", "create"]
+    },
+    {
+      "roles": "update_user",
+      "permission": "ALLOW",
+      "methods": ["destroyById", "count", "updateAttributes"]
+    },
+    {
+      "roles": "*",
+      "permission": "ALLOW",
+      "methods": "uploadFile"
+    }
+  ],
+  "remotes": {
+    "index": {
+      "description": "从数据源中找到与筛选器匹配的所有实例.",
+      "isStatic": true,
+      "parameters": [
+        {
+          "in": "query",
+          "name": "where",
+          "type": "jsonString",
+          "description": "where"
+        },
+        {
+          "in": "query",
+          "name": "limit",
+          "type": "integer",
+          "description": "limit"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "array",
+            "items": {
+              "ref": "user"
+            }
+          }
+        }
+      },
+      "http": {
+        "verb": "get",
+        "path": "/"
+      }
+    },
+    "show": {
+      "description": "从数据源中通过 {{id}} 查找 Model 的实例 .",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Model id",
+          "required": true,
+          "in": "path"
+        },
+        {
+          "name": "filter",
+          "in": "query",
+          "type": "jsonString",
+          "description": "定义 fields(字段)"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "ref": "user"
+          }
+        }
+      },
+      "http": {
+        "verb": "get",
+        "path": "/:id"
+      }
+    },
+    "create": {
+      "summary": "创建模型的一个新实例并将其持久化到数据库中.",
+      "isStatic": true,
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "type": "object",
+          "required": true,
+          "schema": {
+            "ref": "user"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "ref": "user"
+          }
+        }
+      },
+      "http": {
+        "verb": "post",
+        "path": "/"
+      }
+    },
+    "updateAttributes": {
+      "summary": "更新模型实例的属性并将其持久化到数据源中.",
+      "isStatic": false,
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "type": "object",
+          "required": true,
+          "schema": {
+            "ref": "user"
+          }
+        },
+        {
+          "in": "path",
+          "arg": "id",
+          "type": "integer",
+          "description": "Model id",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "ref": "user"
+          }
+        }
+      },
+      "http": {
+        "verb": "put",
+        "path": "/:id"
+      }
+    },
+    "destroyById": {
+      "isStatic": true,
+      "summary": "通过 {{id}} 获取 Model 实例 并将其从数据源中删除.",
+      "parameters": [
+        {
+          "in": "path",
+          "arg": "id",
+          "type": "integer",
+          "description": "Model id",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "ref": "user"
+          }
+        }
+      },
+      "http": {
+        "verb": "del",
+        "path": "/:id"
+      }
+    },
+    "count": {
+      "summary": "统计 Model 实例数量可以使用, 可以使用 where 参数.",
+      "isStatic": true,
+      "parameters": [
+        {
+          "name": "filter",
+          "in": "query",
+          "type": "json",
+          "description": "定义过滤"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        }
+      },
+      "http": {
+        "verb": "get",
+        "path": "/count"
+      }
+    },
+    "exists": {
+      "summary": "通过 {{id}} 获取 Model 实例 是否存在.",
+      "isStatic": true,
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "type": "string",
+          "description": "Model id",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "exists": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "http": {
+        "verb": "get",
+        "path": "/exists/:id"
+      }
+    },
+    "uploadFile": {
+      "summary": "通过 {{id}} 上传 多个 文件.",
+      "isStatic": false,
+      "parameters": [
+        {
+          "in": "path",
+          "arg": "id",
+          "type": "integer",
+          "description": "Model id",
+          "required": true
+        },
+        {
+          "in": "formData",
+          "name": "data",
+          "type": "jsonString",
+          "description": "发送消息内容"
+        },
+        {
+          "in": "formData",
+          "name": "file1",
+          "type": "file",
+          "description": "请求文件",
+          "required": true
+        },
+        {
+          "in": "formData",
+          "name": "file2",
+          "type": "file",
+          "description": "请求文件"
+        }
+      ],
+      "http": {
+        "verb": "post",
+        "path": "/:id/uploadFile"
+      },
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "file1Name": "string",
+                "file2Name": "string",
+                "file1IsinstanceOfFileStream": "boolean",
+                "file2IsinstanceOfFileStream": "boolean",
+                "data": "string",
+                "userId": "int64"
+              }
+            }
+          }
+        }
+      }
+    },
+    "updateAll": {
+      "summary": "批量更新Model 所有实例",
+      "isStatic": true,
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "type": "object",
+          "description": "Model 需要更新的数据",
+          "required": true,
+          "schema": {
+            "ref": "user"
+          }
+        },
+        {
+          "in": "query",
+          "name": "where",
+          "type": "jsonString",
+          "description": "where 条件"
+        }
+      ],
+      "http": {
+        "verb": "put",
+        "path": "/"
+      },
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "type": "array",
+            "items": {
+              "ref": "user"
+            }
+          }
+        }
+      }
+    }
+  }
+}
