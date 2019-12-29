@@ -239,7 +239,7 @@ describe('test/lib/registerRemote/BaseController.test.js', () => {
           type: 'object',
           required: true,
           schema: {
-            ref: 'article',
+            $ref: 'article',
           },
         },
       ];

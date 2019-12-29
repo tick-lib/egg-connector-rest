@@ -60,7 +60,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "ref": "article"
+              "$ref": "article"
             }
           }
         }
@@ -91,7 +91,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         }
       },
@@ -110,7 +110,7 @@
           "type": "object",
           "required": true,
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         }
       ],
@@ -118,7 +118,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         }
       },
@@ -137,7 +137,7 @@
           "type": "object",
           "required": true,
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         },
         {
@@ -152,7 +152,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         }
       },
@@ -177,7 +177,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         }
       },
@@ -256,7 +256,7 @@
           "type": "object",
           "required": true,
           "schema": {
-            "ref": "article"
+            "$ref": "article"
           }
         },
         {
@@ -282,7 +282,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "ref": "article"
+              "$ref": "article"
             }
           }
         }
