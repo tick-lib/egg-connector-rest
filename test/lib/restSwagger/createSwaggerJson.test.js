@@ -14,7 +14,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
       title: 'Swagger Demo',
       termsOfService: '', // 服务条款
       contact: {
-        email: 'yourEmail',
+        email: '29@qq.com',
       },
       license: {
         name: 'Apache 2.0',
@@ -172,7 +172,6 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           type: 'object',
           additionalProperties: false,
           description: '',
-          required: [],
           properties: {
             id: {
               type: 'integer',
@@ -185,7 +184,6 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
         },
         bar: {
           type: 'object',
-          required: [],
           properties: {
             id: {
               type: 'integer',
@@ -295,7 +293,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
               schema: {
                 type: 'array',
                 items: {
-                  ref: 'Pet',
+                  $ref: 'Pet',
                 },
               },
             },
@@ -369,7 +367,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
                 schema: {
                   type: 'array',
                   items: {
-                    ref: '#/definitions/Pet',
+                    $ref: '#/definitions/Pet',
                   },
                 },
               },
@@ -427,7 +425,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
             schema: {
               type: 'array',
               items: {
-                ref: 'Pet',
+                $ref: 'Pet',
               },
             },
           },
@@ -467,7 +465,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
             description: 'success',
             schema: {
               type: 'array',
-              items: { ref: '#/definitions/Pet' },
+              items: { $ref: '#/definitions/Pet' },
             },
           },
           400: { description: 'not found' },
@@ -533,7 +531,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           description: 'desc',
           required: true,
           schema: {
-            ref: 'Pet',
+            $ref: 'Pet',
           },
           err: 'text',
         },
@@ -544,7 +542,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           required: true,
           schema: {
             items: {
-              ref: 'Pet',
+              $ref: 'Pet',
             },
           },
         },
@@ -588,7 +586,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           description: 'desc',
           required: true,
           schema: {
-            ref: '#/definitions/Pet',
+            $ref: '#/definitions/Pet',
           },
         },
         {
@@ -598,7 +596,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           required: true,
           schema: {
             items: {
-              ref: '#/definitions/Pet',
+              $ref: '#/definitions/Pet',
             },
           },
         },
@@ -608,10 +606,6 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           description: 'str',
           required: true,
           type: 'string',
-          default: null,
-          enum: null,
-          format: null,
-          items: null,
         },
         {
           in: 'query',
@@ -620,9 +614,6 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           required: true,
           default: 100,
           type: 'integer',
-          enum: null,
-          minimum: null,
-          maximum: null,
         },
         {
           in: 'query',
@@ -637,9 +628,6 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           },
           collectionFormat: 'multi',
           uniqueItems: false,
-          minItems: null,
-          maxItems: null,
-          default: null,
         },
       ];
 
@@ -657,14 +645,14 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           schema: {
             type: 'array',
             items: {
-              ref: 'Pet',
+              $ref: 'Pet',
             },
           },
         },
         203: {
           description: 'success',
           schema: {
-            ref: 'Pet',
+            $ref: 'Pet',
           },
         },
         400: {
@@ -682,14 +670,14 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           schema: {
             type: 'array',
             items: {
-              ref: '#/definitions/Pet',
+              $ref: '#/definitions/Pet',
             },
           },
         },
         203: {
           description: 'success',
           schema: {
-            ref: '#/definitions/Pet',
+            $ref: '#/definitions/Pet',
           },
         },
         400: {

@@ -35,14 +35,19 @@ module.exports = function Admin(app) {
 
   ArticleSchema.virtual('id').get(id => id);
   ArticleSchema.set('toJSON', { virtuals: true });
-  const Article = mongoose.model('Article', ArticleSchema);
 
-  Article.BelongOwnerById = async function BelongOwnerById(userId, id) {
+  ArticleSchema.statics.index = async function(ctx, filter) {
+    const list = this.find(filter);
+    return list;
+  };
+
+
+  ArticleSchema.statics.BelongOwnerById = async function BelongOwnerById(userId, id) {
     if (!userId || !id) {
       return false;
     }
     logger('userId: %o, id: %o', userId, id);
-    const instance = await Article.find({ userId, _id: id });
+    const instance = await this.find({ userId, _id: id });
     return !!instance;
   };
 
@@ -51,36 +56,32 @@ module.exports = function Admin(app) {
    * @param  {String} msg 错误描述
    * @return {Error} error
    */
-  Article.errorModelNotFound = function(msg = 'Not found Model') {
+  ArticleSchema.statics.errorModelNotFound = function(msg = 'Not found Model') {
     const error = new Error(msg);
     error.statusCode = 404;
     error.code = 'MODEL_NOT_FOUND';
     return error;
   };
 
-  Article.findByPk = Article.findById;
+  ArticleSchema.statics.findByPk = ArticleSchema.findById;
 
-  Article.index = async function(ctx, filter) {
-    const list = Article.find(filter);
-    return list;
-  };
 
-  Article.prototype.show = async function() {
+  ArticleSchema.methods.show = async function() {
     return this;
   };
 
-  Article.countAll = async function(ctx, filter) {
-    const count = await Article.countDocuments(filter);
+  ArticleSchema.statics.countAll = async function(ctx, filter) {
+    const count = await this.countDocuments(filter);
     return { count };
   };
 
-  Article.exists = async function(ctx, id) {
-    const instance = await Article.findByPk(id);
+  ArticleSchema.statics.exists = async function(ctx, id) {
+    const instance = await this.findById(id);
     return { exists: !!instance };
   };
 
-  Article.destroyById = async function(ctx, id) {
-    const instance = await this.findByPk(id);
+  ArticleSchema.statics.destroyById = async function(ctx, id) {
+    const instance = await this.findById(id);
     if (instance) {
       await instance.remove();
       return instance;
@@ -88,12 +89,13 @@ module.exports = function Admin(app) {
     throw this.errorModelNotFound(`Unknown ${this.name} id ${id}`);
   };
 
-  Article.create = async function(ctx, data) {
+  ArticleSchema.statics.create = async function(ctx, data) {
+    const Article = this;
     const instance = new Article(data);
     return instance.save();
   };
 
-  Article.prototype.updateAttributes = async function(ctx, data) {
+  ArticleSchema.methods.updateAttributes = async function(ctx, data) {
     const instance = this;
     Object.keys(data).forEach(key => {
       instance[key] = data[key];
@@ -104,10 +106,12 @@ module.exports = function Admin(app) {
     return instance;
   };
 
-  Article.updateAll = async function(ctx, data, where = {}) {
-    const { ok } = await Article.update({ where }, data);
+  ArticleSchema.statics.updateAll = async function(ctx, data, where = {}) {
+    const { ok } = await this.update({ where }, data);
     return { affected: ok };
   };
+
+  const Article = mongoose.model('Article', ArticleSchema);
 
   return Article;
 };

@@ -1,3 +1,18 @@
+# TODO
+
+1. 支持 `ts` 的引入
+  - registerRemote
+2. 定义 swagger.json 的访问路径
+3. warp script
+
+# 20191229
+1. fix: 修复与`swagger`文档属性
+
+# 20191228
+
+1. 格式化 `mongoose` 设置静态方法的方式
+  - `statics` 以及 `class`
+
 # 20191226
 
 1. [x] 扩展 `definitions`

@@ -12,7 +12,8 @@
     {
       "roles": "admin",
       "permission": "ALLOW",
-      "methods": "index"
+      "methods": "*",
+      "weight": 20
     },
     {
       "roles": "owner",
@@ -71,9 +72,10 @@
     },
     "show": {
       "description": "从数据源中通过 {{id}} 查找 Model 的实例 .",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "id",
-          "type": "integer",
+          "type": "string",
           "description": "Model id",
           "required": true,
           "in": "path"
@@ -89,7 +91,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-             "$ref": "user"
+            "$ref": "user"
           }
         }
       },
@@ -101,15 +103,17 @@
     "create": {
       "summary": "创建模型的一个新实例并将其持久化到数据库中.",
       "isStatic": true,
-      "parameters": [{
-        "in": "body",
-        "name": "body",
-        "type": "object",
-        "required": true,
-        "schema": {
-          "$ref": "user"
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "type": "object",
+          "required": true,
+          "schema": {
+            "$ref": "user"
+          }
         }
-      }],
+      ],
       "responses": {
         "200": {
           "description": "successful operation",
@@ -148,7 +152,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-             "$ref": "user"
+            "$ref": "user"
           }
         }
       },
@@ -173,7 +177,7 @@
         "200": {
           "description": "successful operation",
           "schema": {
-             "$ref": "user"
+            "$ref": "user"
           }
         }
       },
@@ -218,8 +222,8 @@
       "parameters": [
         {
           "in": "path",
-          "arg": "id",
-          "type": "integer",
+          "name": "id",
+          "type": "string",
           "description": "Model id",
           "required": true
         }

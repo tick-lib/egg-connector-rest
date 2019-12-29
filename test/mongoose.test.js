@@ -207,5 +207,86 @@ describe('test/mongoose.test.js', () => {
         assert.deepEqual(res.body, expected);
       });
     });
+
+    describe('access with users', () => {
+      it('should GET /api/v1/users', async () => {
+        const res = await app
+          .httpRequest()
+          .get('/api/v1/users')
+          .set('role', 'admin')
+          .set('Accept', 'application/json');
+
+        const actual = res.body;
+
+        assert(res.status === 200);
+        assert(actual.length === 3);
+      });
+
+      it('should GET /api/v1/users/aaaaaaaaaaaaaaaaaaaab001', async () => {
+        const res = await app
+          .httpRequest()
+          .get('/api/v1/users/aaaaaaaaaaaaaaaaaaaab001')
+          .set('role', 'admin')
+          .set('Accept', 'application/json');
+
+        const actual = res.body;
+
+        const expected = {
+          __v: 0,
+          _id: 'aaaaaaaaaaaaaaaaaaaab001',
+          id: 'aaaaaaaaaaaaaaaaaaaab001',
+          username: 'u1',
+          password: '123456',
+          desc: 'desc',
+        };
+
+        assert(res.status === 200);
+        assert.deepEqual(actual, expected);
+      });
+
+      it('should GET /api/v1/users/exists/aaaaaaaaaaaaaaaaaaaab001', async () => {
+        const res = await app
+          .httpRequest()
+          .get('/api/v1/users/exists/aaaaaaaaaaaaaaaaaaaab001')
+          .set('role', 'admin')
+          .set('Accept', 'application/json');
+
+        const actual = res.body;
+
+        const expected = { exists: true };
+
+        assert(res.status === 200);
+        assert.deepEqual(actual, expected);
+      });
+
+      it('should GET /api/v1/users/create', async () => {
+        app.mockCsrf();
+        const res = await app
+          .httpRequest()
+          .post('/api/v1/users')
+          .set('role', 'create_user')
+          .set('Accept', 'application/json')
+          .send({
+            username: 'create',
+            password: 'pwd',
+            desc: 'desc',
+          });
+
+        const expected = {
+          username: 'create',
+          password: 'pwd',
+          desc: 'desc',
+        };
+
+        const actual = {
+          username: res.body.username,
+          password: res.body.password,
+          desc: res.body.desc,
+        };
+
+        assert(res.status === 200);
+        assert.deepEqual(actual, expected);
+      });
+    });
   });
 });
