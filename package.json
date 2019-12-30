@@ -1,6 +1,6 @@
 {
   "name": "egg-connector-rest",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "egg restful 插件",
   "eggPlugin": {
     "name": "connectorRest"
@@ -47,7 +47,8 @@
     "config",
     "agent.js",
     "lib",
-    "app.js"
+    "app.js",
+    "index.d.ts"
   ],
   "ci": {
     "version": "8, 10"

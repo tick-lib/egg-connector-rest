@@ -1,9 +1,9 @@
 # TODO
 
-1. 支持 `ts` 的引入
+1. [x] 支持 `ts` 的引入
   - registerRemote
-2. 定义 swagger.json 的访问路径
-3. warp script
+2. [x] 定义 swagger.json 的访问路径
+3. [x] warp script
 
 # 20191229
 1. fix: 修复与`swagger`文档属性

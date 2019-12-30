@@ -20,4 +20,5 @@ describe('test/connector-rest.test.js', () => {
       .expect('hi, connectorRest')
       .expect(200);
   });
+
 });
