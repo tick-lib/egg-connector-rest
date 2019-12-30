@@ -284,6 +284,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
               name: 'status',
               in: 'query',
               description: 'desc',
+              type: 'string',
               required: false,
             },
           ],
@@ -360,7 +361,15 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
               'text/xml',
               'multipart/form-data',
             ],
-            parameters: [],
+            parameters: [
+              {
+                name: 'status',
+                in: 'query',
+                description: 'desc',
+                type: 'string',
+                required: false,
+              },
+            ],
             responses: {
               200: {
                 description: 'success',
@@ -393,7 +402,20 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
               'text/xml',
               'multipart/form-data',
             ],
-            parameters: [],
+            parameters: [
+              {
+                description: 'Model id',
+                in: 'path',
+                name: 'id',
+                type: 'number',
+              },
+              {
+                description: '定义 fields(字段) 和 include',
+                in: 'path',
+                name: 'filter',
+                type: 'jsonString',
+              },
+            ],
             responses: {},
             security: [],
             deprecated: false,
@@ -416,6 +438,7 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
             name: 'status',
             in: 'query',
             description: 'desc',
+            type: 'string',
             required: false,
           },
         ],
@@ -459,7 +482,15 @@ describe('test/lib/restSwagger/createSwaggerJson.test.js', () => {
           'text/xml',
           'multipart/form-data',
         ],
-        parameters: [],
+        parameters: [
+          {
+            name: 'status',
+            in: 'query',
+            description: 'desc',
+            type: 'string',
+            required: false,
+          },
+        ],
         responses: {
           200: {
             description: 'success',

@@ -33,6 +33,26 @@ describe('test/mongoose.test.js', () => {
     assert.equal(num, 3);
   });
 
+  it('should GET /swagger.json', async () => {
+    const res = await app
+      .httpRequest()
+      .get('/swagger.json')
+      .set('Accept', 'application/json');
+
+    const actual = res.body;
+
+    assert(res.status === 200);
+    assert(actual.swagger === '2.0');
+  });
+
+  describe('extends registerRemote', () => {
+    it('should registerRemote error return false', () => {
+      const actual = app.registerRemote('error', ctx.model.User);
+      assert(!actual);
+    });
+  });
+
+
   describe('acl 权限控制', () => {
     describe('access control with article', () => {
       it('should GET /api/v1/articles', async () => {

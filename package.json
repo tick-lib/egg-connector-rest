@@ -47,7 +47,8 @@
     "config",
     "agent.js",
     "lib",
-    "app.js"
+    "app.js",
+    "index.d.ts"
   ],
   "ci": {
     "version": "8, 10"
