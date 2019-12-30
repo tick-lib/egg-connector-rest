@@ -1,6 +1,8 @@
 'use strict';
 
 const assert = require('assert');
+const path = require('path');
+const fs = require('fs');
 const Parameter = require('parameter');
 const validateRules = require('../../../lib/registerRemote/validateRules');
 
@@ -162,11 +164,13 @@ describe('test/lib/registerRemote/validateRules.test.js', () => {
         success: { type: 'object' },
         empty: { type: 'object', required: true },
         empty2: { type: 'object' },
+        errArr: { type: 'object' },
       };
       const data = {
         success: { foo: 'bar' },
         empty: {},
         empty2: {},
+        errArr: [ 1 ],
       };
 
       const actual = parameterObj.validate(rules, data);
@@ -175,6 +179,11 @@ describe('test/lib/registerRemote/validateRules.test.js', () => {
           code: 'invalid',
           field: 'empty',
           message: 'not to be empty',
+        },
+        {
+          code: 'invalid',
+          field: 'errArr',
+          message: 'must be object',
         },
       ];
 
@@ -186,9 +195,16 @@ describe('test/lib/registerRemote/validateRules.test.js', () => {
     it('should return error array with file', () => {
       const rules = {
         error: { type: 'file' },
+        file: { type: 'file' },
       };
+
+
+      const demoFilePath = path.join(__dirname, '../../', 'mock/file/demo.md');
+      const rs = fs.createReadStream(demoFilePath);
+
       const data = {
         error: {},
+        file: rs,
       };
 
       const actual = parameterObj.validate(rules, data);
